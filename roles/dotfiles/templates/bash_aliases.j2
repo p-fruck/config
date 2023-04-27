@@ -1,0 +1,3 @@
+{% for key, value in bash_aliases.items() %}
+alias {{ key }}={{ value | quote }}
+{% endfor %}

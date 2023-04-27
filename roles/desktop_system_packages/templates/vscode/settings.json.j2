@@ -1,0 +1,20 @@
+{
+    "terminal.integrated.defaultProfile.linux": "{{ vscode_default_shell_profile }}",
+    "terminal.integrated.profiles.linux": {
+{% for profile in vscode_shell_profiles %}
+        "{{ profile.name }}": {
+            "path": "{{ profile.path }}",
+            "args": [{% for arg in profile.args %}"{{ arg }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+        }
+{% if not loop.last %},
+{% endif %}
+{% endfor %}
+    },
+{% if vscode_hide_menu_bar | default(true) | bool %}
+    "window.menuBarVisibility": "toggle",
+    "window.titleBarStyle": "custom",
+{% endif %}
+    "diffEditor.ignoreTrimWhitespace": {{ vscode_diff_ignore_whitespace | bool | lower }},
+    "files.trimTrailingWhitespace": {{ vscode_trim_trailing_whitespace | bool | lower }},
+    "make.json.parser": "happy"
+}

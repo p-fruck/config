@@ -1,0 +1,20 @@
+---
+- hosts: desktop
+  gather_facts: false
+  roles:
+    - desktop_system_packages
+  tags:
+    - system
+
+- hosts: all
+  gather_facts: false
+  roles:
+    - gnome_shell
+  tags: gnome
+
+- hosts: all
+  gather_facts: false
+  roles:
+    - dotfiles
+  tags:
+    - dotfiles

@@ -1,0 +1,44 @@
+permissions_file: '0600'
+permissions_dir: '0700'
+
+flatpaks:
+  - com.belmoussaoui.Decoder
+  - com.github.xournalpp.xournalpp
+  - com.gitlab.newsflash
+  - com.vscodium.codium
+  - io.bassi.Amberol
+  - io.gitlab.librewolf
+  - org.chromium.Chromium
+  - org.gimp.GIMP
+  - org.gnome.Geary
+  - org.libreoffice.LibreOffice
+  - org.onlyoffice.desktopeditors
+
+system_packages:
+  - git-delta
+  - htop
+  - neovim
+  - nextcloud-client
+  - nextcloud-client-nautilus
+  - screen
+  - tmux
+  - virt-install
+  - virt-manager
+  - virt-viewer
+
+vscode_default_shell_profile: bash
+vscode_diff_ignore_whitespace: false
+vscode_shell_profiles:
+  - name: bash
+    path: /usr/bin/flatpak-spawn
+    args: ["--host", "--env=TERM=xterm-256color", "bash"]
+  - name: toolbox
+    path: /usr/bin/flatpak-spawn
+    args: ["--host", "--env=TERM=xterm-256color", "toolbox", "run", "bash"]
+vscode_trim_trailing_whitespace: true
+
+system_config_templates:
+  - src: vscode/settings.json.j2
+    dest: ~/.var/app/com.vscodium.codium/config/VSCodium/User/settings.json
+
+system_config_extra_templates: []

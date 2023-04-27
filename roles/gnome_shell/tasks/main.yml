@@ -1,0 +1,4 @@
+---
+- name: Apply gnome settings
+  ansible.builtin.command: "gsettings set {{ item }}"
+  loop: "{{ gnome_settings }}"

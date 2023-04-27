@@ -1,0 +1,25 @@
+---
+- name: Install required packages
+  community.general.rpm_ostree_pkg:
+    name: "{{ system_packages }}"
+    state: present
+
+- name: Install required flatpaks
+  ansible.builtin.flatpak:
+    name: "{{ flatpaks }}"
+    state: present
+
+- name: Ensure system config directories are present
+  ansible.builtin.file:
+    path: "{{ item.dest | dirname }}"
+    state: "directory"
+    mode: "{{ item.mode | default(permissions_dir) }}"
+  loop: "{{ system_config_templates + system_config_extra_templates }}"
+
+- name: Template system configs
+  ansible.builtin.template:
+    backup: true
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(permissions_file) }}"
+  loop: "{{ system_config_templates + system_config_extra_templates }}"

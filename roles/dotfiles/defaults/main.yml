@@ -1,0 +1,3 @@
+bashrc_conf_dir: ~/.bashrc.d
+bashrc_umask: '0077'
+git_config_dir: ~/.config/git

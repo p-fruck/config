@@ -1,0 +1,8 @@
+[user]
+	email = {{ item.email }}
+	name = {{ item.name }}
+{% if 'signingkey' in item %}
+	signingkey = {{ item.signingkey }}
+[commit]
+	gpgsign = true
+{% endif %}

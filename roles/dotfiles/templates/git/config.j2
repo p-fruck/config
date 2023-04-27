@@ -1,0 +1,22 @@
+# Enable per-folder configuration file
+{% for account in git_accounts %}
+[includeIf "gitdir:{{ account.folder }}/"]
+	path = config.{{ account.folder | basename }}
+{% endfor %}
+
+{% if git_use_delta %}
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+{% endif %}

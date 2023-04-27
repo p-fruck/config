@@ -1,0 +1,44 @@
+---
+- name: Configure hostname
+  ansible.builtin.hostname:
+    name: "{{ ansible_host }}"
+
+- name: Configure timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: Ensure bash directory exists
+  ansible.builtin.file:
+    path: "{{ bashrc_conf_dir }}"
+    state: directory
+    mode: '0700'
+
+- name: Ensure bash configs exist
+  ansible.builtin.template:
+    src: "bash_{{ item }}.j2"
+    dest: "{{ bashrc_conf_dir }}/{{ item }}"
+  loop:
+    - aliases
+    - config
+
+- name: Ensure git config folder is present
+  ansible.builtin.file:
+    path: "{{ git_config_dir }}"
+    state: directory
+    mode: '0700'
+
+- name: Ensure git config is present
+  ansible.builtin.template:
+    src: "git/config.j2"
+    dest: "{{ git_config_dir }}/config"
+
+- name: Ensure git commit message template is present
+  ansible.builtin.copy:
+    src: git/commitmsg.txt
+    dest: "{{ git_config_dir }}/commitmsg.txt"
+
+- name: Ensure account specific configs are present
+  ansible.builtin.template:
+    src: git/account_config.j2
+    dest: "{{ git_config_dir }}/config.{{ item.folder | basename }}"
+  loop: "{{ git_accounts }}"
